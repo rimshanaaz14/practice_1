@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tough HTML Challenge: Interactive 3D Cube</title>
+  <style>
+    body {
+      background: #181818;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .scene {
+      width: 200px;
+      height: 200px;
+      perspective: 600px;
+      margin-bottom: 30px;
+    }
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+    .cube-face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(0,150,255,0.6);
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      backface-visibility: hidden;
+    }
+    .cube-face.front  { transform: rotateY(0deg) translateZ(100px); background: rgba(0,150,255,0.8);}
+    .cube-face.back   { transform: rotateY(180deg) translateZ(100px); background: rgba(255,80,80,0.8);}
+    .cube-face.right  { transform: rotateY(90deg) translateZ(100px); background: rgba(0,255,180,0.8);}
+    .cube-face.left   { transform: rotateY(-90deg) translateZ(100px); background: rgba(255,220,0,0.8);}
+    .cube-face.top    { transform: rotateX(90deg) translateZ(100px); background: rgba(130,0,255,0.8);}
+    .cube-face.bottom { transform: rotateX(-90deg) translateZ(100px); background: rgba(255,255,255,0.8); color: #181818;}
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .controls button {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .controls button:hover {
+      background: #0af;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive 3D Cube (HTML + CSS + JS)</h1>
+  <div class="scene">
+    <div class="cube" id="cube">
+      <div class="cube-face front">Front</div>
+      <div class="cube-face back">Back</div>
+      <div class="cube-face right">Right</div>
+      <div class="cube-face left">Left</div>
+      <div class="cube-face top">Top</div>
+      <div class="cube-face bottom">Bottom</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button onclick="rotate('x',-90)">Up</button>
+    <button onclick="rotate('x',90)">Down</button>
+    <button onclick="rotate('y',-90)">Left</button>
+    <button onclick="rotate('y',90)">Right</button>
+    <button onclick="resetCube()">Reset</button>
+  </div>
+  <script>
+    let x = 0, y = 0;
+    function rotate(axis, deg) {
+      if(axis === "x") x += deg;
+      if(axis === "y") y += deg;
+      document.getElementById('cube').style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    }
+    function resetCube() {
+      x = 0; y = 0;
+      document.getElementById('cube').style.transform = `rotateX(0deg) rotateY(0deg)`;
+    }
+  </script>
+  <p>Try rotating the cube in different directions!</p>
+</body>
+</html>
